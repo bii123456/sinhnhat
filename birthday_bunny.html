@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chúc mừng sinh nhật!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      position: relative;
+    }
+
+    body::before {
+      content: "🐰";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 100vw;
+      opacity: 0.18;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 2rem;
+      text-align: center;
+      text-shadow: 0 0 12px #ff69b4, 0 0 24px #ff69b4;
+      z-index: 2;
+      position: relative;
+      margin-top: 20vh;
+      margin-left: 1rem;
+      margin-right: 1rem;
+      animation: popText 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes popText {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.05);
+      }
+    }
+
+    .rabbit {
+      position: absolute;
+      top: 0;
+      left: -10vw;
+      will-change: transform;
+      animation-name: runAcross;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes runAcross {
+      0% {
+        transform: translateX(-10vw) rotate(0deg);
+      }
+      50% {
+        transform: translateX(110vw) rotate(360deg);
+      }
+      100% {
+        transform: translateX(-10vw) rotate(0deg);
+      }
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      border-radius: 50%;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    canvas.fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Chúc mừng sinh nhật nhóc ác!<br>Chúc em tuổi mới luôn luôn vui vẻ, mọi điều tốt đẹp sẽ đến với em 🐰🎂</h1>
+  <canvas class="fireworks"></canvas>
+  <audio autoplay loop>
+    <source src="https://cdn.pixabay.com/audio/2023/03/02/audio_5b6c763bea.mp3" type="audio/mpeg">
+  </audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2/dist/fireworks.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const RABBIT_EMOJI = "🐰";
+      const RABBIT_COUNT = 20;
+
+      for (let i = 0; i < RABBIT_COUNT; i++) {
+        const rabbit = document.createElement("span");
+        rabbit.className = "rabbit";
+        rabbit.textContent = RABBIT_EMOJI;
+        rabbit.style.fontSize = `${Math.random() * 2 + 2}rem`;
+        rabbit.style.top = `${Math.random() * 80}vh`;
+        rabbit.style.animationDuration = `${Math.random() * 6 + 6}s`;
+        rabbit.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(rabbit);
+      }
+
+      const colors = ["#ff69b4", "#ffd700", "#87ceeb", "#ffffff"];
+      for (let i = 0; i < 100; i++) {
+        const dot = document.createElement("div");
+        dot.className = "confetti";
+        dot.style.left = `${Math.random() * 100}vw`;
+        dot.style.top = `${Math.random() * -100}vh`;
+        dot.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        dot.style.animationDuration = `${Math.random() * 5 + 3}s`;
+        dot.style.animationDelay = `${Math.random() * 5}s`;
+        document.body.appendChild(dot);
+      }
+
+      const container = document.querySelector(".fireworks");
+      const fireworks = new Fireworks.default(container, {
+        autoresize: true,
+        opacity: 0.5,
+        acceleration: 1.05,
+        friction: 0.97,
+        gravity: 1.5,
+        particles: 50,
+        trace: 3,
+        explosion: 6,
+        intensity: 30,
+        flickering: 50,
+        lineStyle: "round",
+        hue: {
+          min: 0,
+          max: 360
+        },
+        delay: {
+          min: 20,
+          max: 40
+        },
+        rocketsPoint: {
+          min: 0,
+          max: 100
+        },
+        lineWidth: {
+          explosion: { min: 1, max: 3 },
+          trace: { min: 1, max: 2 },
+        },
+        brightness: {
+          min: 50,
+          max: 80
+        },
+        decay: {
+          min: 0.015,
+          max: 0.03
+        },
+      });
+
+      fireworks.start();
+    });
+  </script>
+</body>
+</html>
